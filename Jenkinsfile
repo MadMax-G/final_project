@@ -17,7 +17,7 @@ pipeline {
         script {
           dockerImage = docker.build('madmax1234/jenkins-docker-hub:1.0')
           dockerImage.inside {
-            bash 'pip install requests'
+            sh 'pip install requests'
             sh 'python test.py'
           }
         }
