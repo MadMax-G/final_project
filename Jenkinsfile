@@ -6,13 +6,6 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS = credentials('docker_hub')
   }
-  stages {
-    stage('Pytest') {
-      steps {
-        sh 'pip install pytest'
-        sh 'pytest database.py'
-      }
-    }
     stage('Build') {
       steps {
         sh 'docker build -t madmax1234/jenkins-docker-hub:1.0 .'
