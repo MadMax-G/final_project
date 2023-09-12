@@ -10,7 +10,7 @@ pipeline {
     stage('Pytest') {
       steps {
         sh 'pip install pytest'
-        sh 'pytest'
+        sh 'pytest database.py'
       }
     }
   stages {
