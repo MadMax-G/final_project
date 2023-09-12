@@ -13,7 +13,6 @@ pipeline {
         sh 'pytest database.py'
       }
     }
-  stages {
     stage('Build') {
       steps {
         sh 'docker build -t madmax1234/jenkins-docker-hub:1.0 .'
@@ -35,5 +34,4 @@ pipeline {
       sh 'docker logout'
     }
   }
-}
 }
