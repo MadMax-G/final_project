@@ -18,7 +18,7 @@ pipeline {
           dockerImage = docker.build('madmax1234/jenkins-docker-hub:1.0')
           dockerImage.inside {
             sh 'python -m venv venv'
-            bash 'source venv/bin/activate'
+            sh 'bash source venv/bin/activate'
             sh 'pip install requests'
             sh 'python test.py'
           }
