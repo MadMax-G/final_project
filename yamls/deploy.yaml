@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: main
-        image: madmax1234/profile-app:latest
+        image: madmax1234/jenkins-docker-hub:latest
         ports:
         - containerPort: 7070
