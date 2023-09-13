@@ -23,17 +23,17 @@ spec:
 """
         }
     }
-    stages {
-         stage ('Run app') {
-      steps {
-        sh 'python3 database.py &'
-      }
-    }
-    stage ('test app') {
-      steps {
-        sh 'pytest test.py'
-      }
-    }
+    // stages {
+    //      stage ('Run app') {
+    //   steps {
+    //     sh 'python3 database.py &'
+    //   }
+    // }
+    // stage ('test app') {
+    //   steps {
+    //     sh 'pytest test.py'
+    //   }
+    // }
         stage('Build and Push Docker Image') {
              when {
                 changeset 'database.py'
