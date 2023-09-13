@@ -13,6 +13,6 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 9090
 
 # Run app.py when the container launches
-CMD ["python3", "database.py"]
+ENTRYPOINT ["python3", "database.py"]
 
 
