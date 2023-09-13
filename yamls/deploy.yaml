@@ -16,4 +16,4 @@ spec:
       - name: main
         image: madmax1234/jenkins-docker-hub:1.0
         ports:
-        - containerPort: 7070
+        - containerPort: 9090
