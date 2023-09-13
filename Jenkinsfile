@@ -23,7 +23,7 @@ spec:
 """
         }
     }
-    // stages {
+    stages {
     //      stage ('Run app') {
     //   steps {
     //     sh 'python3 database.py &'
@@ -55,4 +55,4 @@ spec:
             }
         }
     }
-
+}
