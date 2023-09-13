@@ -44,7 +44,7 @@ spec:
                         sh 'dockerd &'
                         sh 'sleep 5'
                         sh 'docker build -t madmax1234/jenkins-docker-hub:1.0 .'
-                        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                             docker madmax1234/jenkins-docker-hub:1.0
