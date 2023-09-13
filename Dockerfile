@@ -10,7 +10,7 @@ ADD . /app
 RUN pip install --no-cache-dir -r "requirements.txt"
 
 # Make port 80 available to the world outside this container
-EXPOSE 9090
+EXPOSE 7070
 
 # Run main.py when the container launches
 CMD ["python", "database.py"]
