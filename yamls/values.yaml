@@ -1,3 +1,12 @@
-image:
-  repository: madmax1234/jenkins-docker-hub
-  tag: latest
+apiVersion: v1
+kind: Service
+metadata:
+  name: main
+spec:
+  selector:
+    app: main
+  type: LoadBalancer
+  ports:
+  - name: main
+    port: 7070
+    targetPort: 7070
