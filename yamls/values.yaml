@@ -8,5 +8,5 @@ spec:
   type: LoadBalancer
   ports:
   - name: main
-    port: 9090
-    targetPort: 9090
+    port: 7070
+    targetPort: 7070
