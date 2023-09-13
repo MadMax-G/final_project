@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t madmax1234/jenkins-docker-hub:1.0 .'
+        sh 'docker build -t madmax1234/jenkins-docker-hub:latest .'
       }
     }
     // stage('Test') {
@@ -30,7 +30,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push madmax1234/jenkins-docker-hub:1.0'
+        sh 'docker push madmax1234/jenkins-docker-hub:latest'
       }
     }
   }
