@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t madmax1234/jenkins-docker-hub:latest .'
+        sh 'docker buildx build --platform linux/amd64 -t madmax1234/jenkins-docker-hub:latest .'
       }
     }
     // stage('Test') {
