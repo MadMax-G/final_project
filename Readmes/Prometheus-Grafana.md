@@ -141,14 +141,32 @@ To verify the deployment status of each object, input and run the following comm
 - For Deployment: `kubectl get deployments --namespace=observability -o wide`
 - For Service: `kubectl get svc --namespace=observability -o wide`
 
-## Accessing Grafana
+## Gaining Access to Grafana
 
-To fetch the external IP of your Grafana service, execute:
+To obtain the external IP for Grafana, input the following command:
 
 ```bash
 kubectl get svc --namespace=observability
 ```
 
-Your Grafana can now be accessed with this external IP and port 3000. The default username and password are both 'admin'. After logging in, you can add Prometheus as a data source by providing the cluster IP of the Prometheus server, which can be fetched by running `kubectl get svc -n observability`.
+The output will contain the LoadBalancer IP for Grafana. Copy this IP and enter it in your web browser followed by ":3000" (e.g., `http://<LoadBalancer IP>:3000`).
 
-Congratulations! You've successfully set up Prometheus and Grafana on your Kubernetes cluster via Argo CD.
+On the Grafana login page, use 'admin' for both username and password fields.
+
+## Adding Prometheus as a Data Source in Grafana
+
+Upon gaining access into Grafana, navigate to the home page and select the "Add your first data source" option. From the list of available options, opt for 'Prometheus'.
+
+Back in your cluster, input the following command to obtain the cluster IP for the Prometheus server:
+
+```bash
+kubectl get svc --namespace=observability
+```
+
+Duplicate the ClusterIP that corresponds to the Prometheus server and paste it into the URL field in the Grafana data source configuration settings for Prometheus. 
+
+Scroll down and click on "Save & Test", after which, navigate to the 'Explore' view.
+
+In the explore view, select a metric you desire to monitor, input it into the query field, and run the query. This enables you to start monitoring your cluster with Grafana and Prometheus.
+
+Congratulations! You have successfully set up a monitoring solution with Prometheus and Grafana on your Kubernetes cluster with the use of Argo CD.
