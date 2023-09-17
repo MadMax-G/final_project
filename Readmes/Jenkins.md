@@ -67,6 +67,79 @@ After setting up the prerequisites, proceed with the following steps to install 
 
    Open the Jenkins URL in your web browser. The URL is the External-IP of the Jenkins service at port 8080. Log in using the username 'admin' and the password retrieved in the previous step.
 
+## promblem solving - Jenkins does't create a LoadBalancer
+
+   If Jenkins doesn't create a LoadBalancer after installation on the cluster, replace the 'service' YAML file with the following one:
+
+   ```bash
+   apiVersion: v1
+   kind: Service
+   metadata:
+     annotations:
+       cloud.google.com/neg: '{"ingress":true}'
+       meta.helm.sh/release-name: myjenkins
+       meta.helm.sh/release-namespace: default
+     creationTimestamp: "2023-09-17T09:13:21Z"
+     labels:
+       app.kubernetes.io/component: jenkins-controller
+       app.kubernetes.io/instance: myjenkins
+       app.kubernetes.io/managed-by: Helm
+       app.kubernetes.io/name: jenkins
+       helm.sh/chart: jenkins-4.6.4
+     managedFields:
+     - apiVersion: v1
+       fieldsType: FieldsV1
+       fieldsV1:
+         f:metadata:
+           f:annotations:
+             .: {}
+             f:meta.helm.sh/release-name: {}
+             f:meta.helm.sh/release-namespace: {}
+           f:labels:
+             .: {}
+             f:app.kubernetes.io/component: {}
+             f:app.kubernetes.io/instance: {}
+             f:app.kubernetes.io/managed-by: {}
+             f:app.kubernetes.io/name: {}
+             f:helm.sh/chart: {}
+         f:spec:
+           f:internalTrafficPolicy: {}
+           f:ports:
+             .: {}
+             k:{"port":8080,"protocol":"TCP"}:
+               .: {}
+               f:name: {}
+               f:port: {}
+               f:protocol: {}
+               f:targetPort: {}
+           f:selector: {}
+           f:sessionAffinity: {}
+           f:type: {}
+       manager: helm
+       operation: Update
+       time: "2023-09-17T09:13:21Z"
+     name: myjenkins
+     namespace: default
+     resourceVersion: "2594490"
+     uid: befd0758-56cd-4463-b1dc-26efe29d27e5
+   spec:
+     internalTrafficPolicy: Cluster
+     ports:
+     - name: http
+       port: 8080
+       protocol: TCP
+       targetPort: 8080
+     selector:
+       app.kubernetes.io/component: jenkins-controller
+       app.kubernetes.io/instance: myjenkins
+     sessionAffinity: None
+     type: LoadBalancer
+   status:
+     loadBalancer: {}
+   
+   ```
+
+
 ## Jenkins Configuration
 
 After logging in to Jenkins, follow the instructions to install the suggested plugins. 
