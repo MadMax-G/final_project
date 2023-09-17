@@ -27,10 +27,15 @@ spec:
          stage('Run Tests and Build Docker Image') {
             steps {
                 container('dind') {
+                    echo 'in container'
                     script {
+                        echo 'in script'
                         sh 'dockerd &'
+                        echo 'before sleep'
                         sh 'sleep 5'
+                        echo 'after sleep'
                         sh 'docker buildx build --platform linux/amd64 -t madmax1234/jenkins-docker-hub:latest .'
+                        echo 'after build'
                         sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
                         echo 'passed test'
                     }
