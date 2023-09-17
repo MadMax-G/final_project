@@ -1,16 +1,8 @@
 pipeline {
-  agent {label 'mac'}
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker_hub')
-  }
-  stages {
-    stage('Setup') {
-      steps {
-        script {
-          podTemplate(yaml: """
+    agent {
+        kubernetes {
+            label 'dind-agent'
+            yaml """
 apiVersion: v1
 kind: Pod
 spec:
@@ -28,36 +20,47 @@ spec:
   volumes:
   - name: docker-sock
     emptyDir: {}
-""") {
-            node('mac') {
-              stage('Run Tests and Build Docker Image') {
-                steps {
-                  sh 'docker buildx build --platform linux/amd64 -t madmax1234/jenkins-docker-hub:latest .'
-                  sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
-                  echo 'passed test'
-                }
-              }
-              stage('Login') {
-                steps {
-                  withCredentials([usernamePassword(credentialsId: 'docker_hub', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                  }
-                }
-              }
-              stage('Push') {
-                steps {
-                  sh 'docker push madmax1234/jenkins-docker-hub:latest'
-                }
-              }
-            }
-          }
+"""
         }
-      }
     }
-  }
-  post {
-    always {
-      sh 'docker logout'
+    stages {
+         stage('Run Tests and Build Docker Image') {
+            steps {
+                container('dind') {
+                    script {
+                        sh 'dockerd &'
+                        sh 'sleep 5'
+                        sh 'docker buildx build --platform linux/amd64 -t madmax1234/jenkins-docker-hub:latest .'
+                        sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
+                        echo 'passed test'
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                container('dind') {
+                    script {
+                        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                            sh '''
+                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                            docker push madmax1234/jenkins-docker-hub:latest
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
+       post {
+        failure {
+            emailext (
+                to: 'maxmadorski@gmail.com',
+                subject: "Failed: ${currentBuild.fullDisplayName}",
+                body: "The build failed. Please check the Jenkins build log for details.",
+                attachLog: true,
+            )
+        }
+    }
 }
