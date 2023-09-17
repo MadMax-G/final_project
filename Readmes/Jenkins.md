@@ -67,7 +67,7 @@ After setting up the prerequisites, proceed with the following steps to install 
 
    Open the Jenkins URL in your web browser. The URL is the External-IP of the Jenkins service at port 8080. Log in using the username 'admin' and the password retrieved in the previous step.
 
-## promblem solving - Jenkins does't create a LoadBalancer
+## Problem solving - Jenkins doesn't create a LoadBalancer
 
    If Jenkins doesn't create a LoadBalancer after installation on the cluster, replace the 'service' YAML file with the following one:
 
