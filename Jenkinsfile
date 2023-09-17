@@ -5,20 +5,23 @@ pipeline {
             yaml """
 apiVersion: v1
 kind: Pod
+metadata:
+  name: jenkins-dind-agent
+  namespace: jenkins
 spec:
   containers:
-  - name: dind
+  - name: jenkins-dind
     image: docker:dind
     env:
     - name: DOCKER_HOST
-      value: unix:///var/run/docker-dind.sock
+      value: tcp://localhost:2375
     securityContext:
       privileged: true
     volumeMounts:
-    - mountPath: /var/run
-      name: docker-sock
+    - name: docker-graph-storage
+      mountPath: /var/lib/docker
   volumes:
-  - name: docker-sock
+  - name: docker-graph-storage
     emptyDir: {}
 """
         }
