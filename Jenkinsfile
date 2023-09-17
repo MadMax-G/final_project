@@ -27,7 +27,6 @@ spec:
          stage('Run Tests and Build Docker Image') {
             steps {
                 container('dind') {
-                    echo 'in container'
                     script {
                         echo 'in script'
                         sh 'dockerd &'
