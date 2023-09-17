@@ -41,30 +41,31 @@ spec:
                 }
             }
         }
-
-        stage('Push Docker Image') {
-            steps {
-                container('dind') {
-                    script {
-                        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                            sh '''
-                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                            docker push madmax1234/jenkins-docker-hub:latest
-                            '''
-                        }
-                    }
-                }
-            }
-        }
-    }
-       post {
-        failure {
-            emailext (
-                to: 'maxmadorski@gmail.com',
-                subject: "Failed: ${currentBuild.fullDisplayName}",
-                body: "The build failed. Please check the Jenkins build log for details.",
-                attachLog: true,
-            )
-        }
     }
 }
+//         stage('Push Docker Image') {
+//             steps {
+//                 container('dind') {
+//                     script {
+//                         withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+//                             sh '''
+//                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+//                             docker push madmax1234/jenkins-docker-hub:latest
+//                             '''
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//        post {
+//         failure {
+//             emailext (
+//                 to: 'maxmadorski@gmail.com',
+//                 subject: "Failed: ${currentBuild.fullDisplayName}",
+//                 body: "The build failed. Please check the Jenkins build log for details.",
+//                 attachLog: true,
+//             )
+//         }
+//     }
+// }
