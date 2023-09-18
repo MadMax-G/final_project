@@ -42,7 +42,7 @@ spec:
             steps {
                 container('dind') {
                     script {
-                        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        withCredentials([usernamePassword(credentialsId: 'error', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                             docker push madmax1234/jenkins-docker-hub:latest
