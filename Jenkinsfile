@@ -57,7 +57,7 @@ spec:
         failure {
             emailext (
                 to: 'maxmadorski@gmail.com',
-                subject: "Failed: ${currentBuild.fullDisplayName}",
+                subject: "Failed: The Build Failed",
                 body: "The build failed. Please check the Jenkins build log for details.",
                 attachLog: true,
             )
