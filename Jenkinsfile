@@ -30,7 +30,7 @@ spec:
                     script {
                         sh 'dockerd &'
                         sh 'sleep 5'
-                        sh 'docker buildx build --platform linux/amd64 -t madmax1234/jenkins-docker-hub:latest .'
+                        sh 'docker build -t madmax1234/jenkins-docker-hub:latest .'
                         sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
                         echo 'passed test'
                     }
