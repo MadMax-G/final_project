@@ -5,14 +5,8 @@ import os
 
 app = Flask(__name__)
 
-load_dotenv()
-
-username = os.getenv("USER_NAME")
-password = os.getenv("PASSWORD")
-
-print("API_KEY: ", username)
-print("API_SECRET: ", password)
-
+username = os.environ["USER_NAME"]
+password = os.environ["PASSWORD"]
 
 # Connect to your MongoDB instance
 client = MongoClient(f'mongodb://{username}:{password}@34.78.116.136:27017/')
