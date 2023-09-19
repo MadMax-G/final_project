@@ -59,6 +59,10 @@ spec:
                     script {
                         withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
+                            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+                            chmod 700 get_helm.sh
+                            ./get_helm.sh
+                            sleep 3
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                             helm package app
                             helm push app-0.1.0.tgz  oci://registry-1.docker.io/madmax1234
