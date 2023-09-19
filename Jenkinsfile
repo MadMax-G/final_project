@@ -59,6 +59,7 @@ spec:
                     script {
                         withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
+                            apk add --no-cache curl
                             curl -fsSL -o get_helm https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
                             chmod 700 get_helm
                             ./get_helm
