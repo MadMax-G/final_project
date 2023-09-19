@@ -7,9 +7,9 @@ WORKDIR /app
 COPY app /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install flask pytest pymongo os
 
-# Make port 80 available to the world outside this container
+# Make port 9090 available to the world outside this container
 EXPOSE 9090
 
 # Run app.py when the container launches
