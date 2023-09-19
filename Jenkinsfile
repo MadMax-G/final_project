@@ -60,8 +60,8 @@ spec:
                         withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                            helm package app
-                            helm push app-0.1.0.tgz  oci://registry-1.docker.io/madmax1234
+                            helm package helmapp
+                            helm push helmapp-0.1.0.tgz  oci://registry-1.docker.io/madmax1234
                             helm package helmdb
                             helm push helmdb-0.1.0.tgz  oci://registry-1.docker.io/madmax1234
                             '''
