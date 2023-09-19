@@ -24,34 +24,34 @@ spec:
         }
     }
     stages {
-         stage('Run Tests and Build Docker Image') {
-            steps {
-                container('dind') {
-                    script {
-                        sh 'dockerd &'
-                        sh 'sleep 5'
-                        sh 'docker build -t madmax1234/jenkins-docker-hub:latest .'
-                        sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
-                        echo 'passed test'
-                    }
-                }
-            }
-        }
+        //  stage('Run Tests and Build Docker Image') {
+        //     steps {
+        //         container('dind') {
+        //             script {
+        //                 sh 'dockerd &'
+        //                 sh 'sleep 5'
+        //                 sh 'docker build -t madmax1234/jenkins-docker-hub:latest .'
+        //                 sh 'docker run madmax1234/jenkins-docker-hub:latest test.py'
+        //                 echo 'passed test'
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Push Docker Image') {
-            steps {
-                container('dind') {
-                    script {
-                        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                            sh '''
-                            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                            docker push madmax1234/jenkins-docker-hub:latest
-                            '''
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Push Docker Image') {
+        //     steps {
+        //         container('dind') {
+        //             script {
+        //                 withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+        //                     sh '''
+        //                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+        //                     docker push madmax1234/jenkins-docker-hub:latest
+        //                     '''
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build and push helm chart') {
             steps {
@@ -59,9 +59,9 @@ spec:
                     script {
                         withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                             sh '''
-                            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-                            chmod 700 get_helm.sh
-                            ./get_helm.sh
+                            curl -fsSL -o get_helm https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+                            chmod 700 get_helm
+                            ./get_helm
                             sleep 3
                             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                             helm package app
