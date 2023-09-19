@@ -4,7 +4,7 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 # Connect to your MongoDB instance
-client = MongoClient('mongodb://34.78.116.136:27017/')
+client = MongoClient('mongodb://root:3yGWpZ7jeS@34.78.116.136:27017/')
 db = client['links']  # Change 'key_value_db' to your preferred database name
 collection = db['projects']
 
