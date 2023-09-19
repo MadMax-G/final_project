@@ -1,10 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 
+load_dotenv()
+
+username = os.getenv("USER_NAME")
+password = os.getenv("PASSWORD")
+
+print("API_KEY: ", username)
+print("API_SECRET: ", password)
+
+
 # Connect to your MongoDB instance
-client = MongoClient('mongodb://root:3yGWpZ7jeS@34.78.116.136:27017/')
+client = MongoClient(f'mongodb://{username}:{password}@34.78.116.136:27017/')
 db = client['links']  # Change 'key_value_db' to your preferred database name
 collection = db['projects']
 
