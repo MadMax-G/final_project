@@ -2,24 +2,60 @@
 <html>
 <head>
     <title>Maxim Madorski Projects</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lightgray;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 0 auto; /* Center the box horizontally */
+            width: 400px; /* Adjust the width as needed */
+        }
+
+        .square-picture {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto; /* Center the picture horizontally */
+            background-image: url('https://cdn-icons-png.flaticon.com/512/5266/5266248.png');
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 20px;
+            background-color: transparent; /* Set the background color to transparent */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hi, Here are the links to all my projects</h1>
-    <ul>
-        {% for pair in links %}
-            <li><a href="{{ pair.value }}">{{ pair.key }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <div class="square-picture"></div>
+        <h1>welcome to my preview site</h1>
+        <ul>
+            {% for pair in links %}
+                <li><a href="{{ pair.value }}">{{ pair.key }}</a></li>
+            {% endfor %}
+        </ul>
 
-    <h2>Add a New Pair</h2>
-    <form method="POST">
-        <label for="key">Key:</label>
-        <input type="text" name="key" required>
-        <br>
-        <label for="value">Value:</label>
-        <input type="text" name="value" required>
-        <br>
-        <input type="submit" value="Add">
-    </form>
+        <h2>ADD A NEW LINK:</h2>
+        <form method="POST">
+            <label for="key">SITE:</label>
+            <input type="text" name="key" required>
+            <br>
+            <label for="value">URL:</label>
+            <input type="text" name="value" required>
+            <br>
+            <input type="submit" value="Add">
+        </form>
+    </div>
 </body>
 </html>
